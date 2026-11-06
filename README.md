@@ -1,14 +1,16 @@
-# HammerOS 0.1 — "Forge" 
-# WORK IN PROGRESS"
+# hammerOS 0.1 — "Forge"
 
-An ultra-light, **built-from-source** Linuxdistribution:
+> **status: work in progress** — first build is bootable-live; GUI lands in 0.2.
+
+An ultra-light, **built-from-source** Linux distribution:
 upstream **Linux kernel** + **musl libc** + **BusyBox** userland. No Debian,
 no Ubuntu, no distro base packages — every binary in the ISO comes from
 pinned upstream source tarballs compiled by `build.sh`.
 
 ```
 anvil
-  └── hammer    <- this OS
+  ├── hammer    <- AnvilOS 1.0 (the big distro, Debian live-build)
+  └── forge     <- this OS (ultra-light, built from source)
 ```
 
 ## Design targets
@@ -41,7 +43,7 @@ Artifact: `hammeros-0.1.0-amd64.iso` + `.sha256`.
 
 - 0.1 — boot/live: kernel, custom init, DHCP net, dropbear ssh
 - 0.2 — GUI: X (fbdev/kdrive from source) + JWM + st; savefile persistence
-- 0.3 — apps + hammer-pkg (musl-compatible static packages, update channel)
+- 0.3 — apps + forge-pkg (musl-compatible static packages, update channel)
 
 ## Repo layout
 

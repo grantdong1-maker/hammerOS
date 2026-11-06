@@ -150,7 +150,7 @@ stage_iso() {
     xorriso -as mkisofs -o "$ISO" \
         -b boot/isolinux/isolinux.bin -c boot/boot.cat \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
-        -J -R -V "hammerOS ${ISOVER} Hammer" "$IT"
+        -J -R -V "hammerOS ${ISOVER} Forge" "$IT"
     sha256sum "$ISO" "$OUT/initramfs.cpio.gz" > "$ISO.sha256"
     ls -lh "$ISO" "$ISO.sha256"
     echo "hammerOS 0.1.0 built."
