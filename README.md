@@ -1,4 +1,5 @@
-# hammerOS 0.1 — "Hammer"
+# HammerOS 0.1 — "Forge" 
+# WORK IN PROGRESS"
 
 An ultra-light, **built-from-source** Linuxdistribution:
 upstream **Linux kernel** + **musl libc** + **BusyBox** userland. No Debian,
