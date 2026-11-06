@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# hammerOS ("Hammer") build system — builds an ultra-light Linux from
+# hammerOS ("Forge") build system — builds an ultra-light Linux from
 # upstream sources only: linux kernel + musl + busybox + dropbear.
 #
 #   ./build.sh [fetch|kernel|rootfs|iso|all]
