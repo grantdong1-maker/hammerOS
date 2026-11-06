@@ -1,0 +1,8 @@
+#!/bin/busybox sh
+# kernel exec's /init in the initramfs; bootstrap the mounts then hand off
+# to BusyBox init.
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys || true
+mount -t devtmpfs devtmpfs /dev || true
+mount -t tmpfs tmpfs /tmp || true
+exec /sbin/init

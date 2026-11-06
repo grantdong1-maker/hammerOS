@@ -1,0 +1,12 @@
+hammerOS 0.1 "Hammer" — built from source
+      /\
+ /_\/\/ hammer: kernel + musl + busybox
+ /\
+
+  who       : root (no password)
+  ssh       : port 22 (dropbear, host keys generated on first boot)
+  net       : eth0 via udhcpc dhcp
+  usage     : probe-> $ ip a   ·   editor `vi`   ·   http server: `httpd`
+
+  this session = 1 of 2 ttys (`Alt+F2` for the second). enjoy your stay.
+  docs: /etc/os-release · build: github.com/grantdong1-maker/hammerOS

@@ -1,0 +1,5 @@
+# hammerOS inittab (BusyBox init)
+::sysinit:/etc/rc.init
+tty1::respawn:-/bin/sh
+tty2::respawn:/sbin/getty 38400 tty2
+::shutdown:/etc/rc.shutdown

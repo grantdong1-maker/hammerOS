@@ -1,0 +1,6 @@
+#!/bin/sh
+subsys() { umount -n "$1" 2>/dev/null; }
+subsys /proc
+subsys /sys
+subsys /tmp
+sync

@@ -1,0 +1,33 @@
+#!/bin/sh
+# hammerOS first-boot init
+mount -t proc proc /proc 2>/dev/null
+mount -t sysfs sysfs /sys 2>/dev/null
+mount -t devtmpfs devtmpfs /dev 2>/dev/null
+mount -t tmpfs tmpfs /tmp 2>/dev/null
+mkdir -p /dev/pts /run
+
+hostname hammeros
+echo hammeros > /proc/sys/kernel/hostname
+
+# hotplug cbd? udev-lite
+mdev -s 2>/dev/null
+
+# ssh host keys (first boot only)
+if [ ! -f /etc/dropbear/dropbear_rsa_host_key ]; then
+    mkdir -p /etc/dropbear
+    dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key \
+        -s 2048 >/dev/null 2>&1
+fi
+
+# network: dhcp on eth0 (VM nic shows up right after mdev -s)
+ip link set lo up 2>/dev/null
+if ip link show eth0 >/dev/null 2>&1; then
+    ip link set eth0 up
+    udhcpc -i eth0 -n -q -s /usr/share/udhcpc/default.script >/dev/null 2>&1
+fi
+
+# ssh server
+dropbear -p 22 >/dev/null 2>&1
+
+clear
+cat /etc/motd

@@ -1,0 +1,5 @@
+NAME=hammerOS
+VERSION=0.1.0 (Hammer)
+ID=hammeros
+PRETTY_NAME="hammerOS 0.1.0 (Hammer)"
+HOME_URL="https://github.com/grantdong1-maker/hammerOS"
