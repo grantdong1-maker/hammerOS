@@ -131,7 +131,11 @@ stage_iso() {
     cp "$OUT/bzImage" "$IT/boot/"
     cp "$OUT/initramfs.cpio.gz" "$IT/boot/"
     cp "$XB/isolinux.bin" "$IT/boot/isolinux/"
-    [ -f "$XB/ldlinux.c32" ] && cp "$XB/ldlinux.c32" "$IT/boot/isolinux/"
+    if [ -f /usr/lib/syslinux/modules/bios/ldlinux.c32 ]; then
+        cp /usr/lib/syslinux/modules/bios/ldlinux.c32 "$IT/boot/isolinux/"
+    elif [ -f "$XB/ldlinux.c32" ]; then
+        cp "$XB/ldlinux.c32" "$IT/boot/isolinux/"
+    fi
     sed "s|@VERSION@|${ISOVER}|" boot/isolinux.cfg > "$IT/boot/isolinux/isolinux.cfg"
     local ISO="$SCRIPT_DIR/hammeros-${ISOVER}-amd64.iso"
     xorriso -as mkisofs -o "$ISO" \
