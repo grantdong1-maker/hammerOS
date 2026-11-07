@@ -1,0 +1,5 @@
+kernel: linux-6.12.116
+fetch: linux-6.12.116.tar.xz
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  2 141.8M   2  3.10M   0      0  2.49M      0   00:56   00:01   00:55  2.49M  5 141.8M   5  8.03M   0      0  3.30M      0   00:42   00:02   00:40  3.30M

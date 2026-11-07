@@ -69,24 +69,9 @@ stage_rootfs() {
     [ -d "$SRC/musl-${VER_MUSL}" ] || tar -xf "$SRC/musl-${VER_MUSL}.tar.gz" -C "$SRC"
     if [ ! -x "$TC/bin/musl-gcc" ]; then
         mkdir -p "$SRC/build-musl"
-        (cd "$SRC/build-musl" && "$SRC/musl-${VER_MUSL}"/configure \
-            --prefix="$TC" --disable-gcc-wrapper \
-            && make -j"$JOBS" && make install
-         # wrapper is generated in-tree even with --disable-gcc-wrapper? ensure:
-         )
-        # generate the musl-gcc wrapper script
-        (cd "$SRC/musl-${VER_MUSL}" && ./configure --prefix="$TC" >/dev/null 2>&1 \
-            && make -s obj/musl-gcc >/dev/null 2>&1) || true
-        mkdir -p "$TC/bin" "$TC/lib" "$TC/include"
-        install -m 755 "$SRC/musl-${VER_MUSL}/obj/musl-gcc" "$TC/bin/" 2>/dev/null \
-            || { echo "musl-gcc wrapper missing"; exit 1; }
-        cp -a "$SRC/build-musl/lib"/* "$TC/lib/" 2>/dev/null || true
-        cp -a "$SRC/musl-${VER_MUSL}/include"/* "$TC/include/" 2>/dev/null || true
-        cp -a "$SRC/build-musl/obj/include"/* "$TC/include/" 2>/dev/null || true
-        mkdir -p "$TC/lib/musl-gcc"
-        cp -a "$SRC/build-musl/obj/rcrt1.o" "$SRC/build-musl/obj/crt1.o" \
-            "$SRC/build-musl/obj/crti.o" "$SRC/build-musl/obj/crtn.o" "$TC/lib/musl-gcc/" 2>/dev/null || true
-        cp -a "$SRC/build-musl/obj/libc.a" "$SRC/build-musl/obj/libc.so" "$TC/lib/musl-gcc/" 2>/dev/null || true
+        (cd "$SRC/build-musl" &&
+            "$SRC/musl-${VER_MUSL}"/configure --prefix="$TC" &&
+            make -j"$JOBS" && make install)
     fi
     MUSL_CC="$TC/bin/musl-gcc"
     export CC="$MUSL_CC"
@@ -106,7 +91,7 @@ stage_rootfs() {
     [ -d "$dsrc" ] || tar -xf "$SRC/dropbear-${VER_DROP}.tar.bz2" -C "$SRC"
     if [ ! -f "$dsrc/dropbear" ]; then
         (cd "$dsrc" &&
-            CC="$MUSL_CC" ./configure --disable-zlib --disable-syslog &&
+            CC="$MUSL_CC" LDFLAGS="-static" ./configure --disable-zlib --disable-syslog &&
             make -j"$JOBS" PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp")
     fi
 
