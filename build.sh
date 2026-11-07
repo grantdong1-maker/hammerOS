@@ -83,6 +83,8 @@ stage_rootfs() {
         cd "$bsrc"
         make defconfig
         sed -i 's/^# CONFIG_STATIC is not set$/CONFIG_STATIC=y/' .config
+        # tc applet is broken vs linux-6.8+ headers (struct tc_cbq_wrropt gone)
+        sed -i 's/^CONFIG_TC=y$/# CONFIG_TC is not set/' .config
         make -j"$JOBS" oldconfig </dev/null
         make -j"$JOBS"
     )
