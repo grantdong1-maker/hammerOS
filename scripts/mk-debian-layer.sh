@@ -86,13 +86,16 @@ xsetroot -solid '#26292e'
 pipewire &
 pipewire-pulse &
 wireplumber &
-exec dbus-launch --exit-with-session jwm
+exec dbus-launch --exit-with-session jwm -f /etc/jwm/system.jwmrc
 EOF
 chmod 755 "$DIR/root/.xinitrc"
 
-install -d -m 755 "$DIR/root/.jwm"
+install -d -m 750 "$DIR/root/.jwm"
 cp "$(pwd)/scripts/jwmrc" "$DIR/root/.jwm/jwmrc"
-chroot "$DIR" jwm -p -f /root/.jwm/jwmrc || echo "  (jwm config did not parse)"
+# Debian jwm resolves its default config from /etc/jwm/system.jwmrc — own it too
+cp "$DIR/etc/jwm/system.jwmrc" "$DIR/etc/jwm/system.jwmrc.orig"
+cp "$(pwd)/scripts/jwmrc" "$DIR/etc/jwm/system.jwmrc"
+chroot "$DIR" jwm -p -f /etc/jwm/system.jwmrc || echo "  (jwm config did not parse)"
 # blender is a nice-to-have; add if apt had it (bookworm main does)
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y blender 2>/dev/null || true
 
