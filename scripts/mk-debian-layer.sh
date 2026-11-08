@@ -28,7 +28,7 @@ firmware-realtek firmware-atheros firmware-brcm80211
 
 if [ ! -d "$DIR/bin" ]; then
     echo "== debootstrap $RELEASE -> $DIR"
-    debootstrap --variant=standard --components=main,contrib,non-free,non-free-firmware \
+    debootstrap --variant=minbase --components=main,contrib,non-free,non-free-firmware \
         "$RELEASE" "$DIR" "$MIRROR"
 fi
 
@@ -37,8 +37,17 @@ cat > "$DIR/etc/apt/apt.conf.d/99hammeros" <<'EOF'
 APT::Install-Recommends "false";
 APT::AutoRemove::RecommendsImportant "false";
 EOF
-chroot "$DIR" apt-get update
-chroot "$DIR" apt-get install -y $PKGS
+# headless chroot: no debconf dialogs
+cat > "$DIR/etc/apt/apt.conf.d/71noninteractive" <<'EOF'
+apt::configure-options {"DEBIAN_FRONTEND"="noninteractive"; "APT::Color"="0";};
+EOF
+echo 'keyboard-configuration keyboard-configuration/layout select English (US)' | \
+    tee "$DIR/tmp/preseed" >/dev/null
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive debconf-set-selections /tmp/preseed
+rm -f "$DIR/tmp/preseed"
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive dpkg --configure -a
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get update
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y $PKGS
 
 echo "== hammerOS overlay config"
 echo hammeros > "$DIR/etc/hostname"
@@ -116,7 +125,7 @@ cat > "$DIR/root/.jwm/jwmrc" <<'EOF'
 </JWM>
 EOF
 # blender is a nice-to-have; add if apt had it (bookworm main does)
-chroot "$DIR" apt-get install -y blender 2>/dev/null || true
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y blender 2>/dev/null || true
 
 echo "== squash"
 rm -f "$OUT.tmp"
