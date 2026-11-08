@@ -1,0 +1,74 @@
+kernel: linux-6.12.116
+have: linux-6.12.116.tar.xz
+have: busybox-1.36.1.tar.bz2
+have: musl-1.2.5.tar.gz
+have: dropbear-2024.86.tar.bz2
+have: links-2.30.tar.gz
+fetch done
+.config:238:warning: override: reassigning to symbol USB_VIDEO_CLASS
+#
+# configuration written to .config
+#
+  SYNC    include/config/auto.conf
+  DESCEND objtool
+  CALL    scripts/checksyscalls.sh
+  INSTALL libsubcmd_headers
+  CC      drivers/pci/quirks.o
+  CC      drivers/pnp/resource.o
+  CC      drivers/ata/libata-core.o
+  CC      drivers/ata/libata-scsi.o
+  CC      drivers/ata/libata-eh.o
+  CC      drivers/ata/libata-transport.o
+  AR      drivers/pnp/built-in.a
+  CC      drivers/ata/libata-trace.o
+  CC      drivers/ata/libata-sata.o
+  CC      drivers/ata/libata-sff.o
+  AR      drivers/pci/built-in.a
+  CC      drivers/ata/libata-pmp.o
+  CC      drivers/ata/libata-acpi.o
+  CC      drivers/ata/libata-pata-timings.o
+  CC      drivers/ata/ahci.o
+  CC      drivers/ata/libahci.o
+  CC      drivers/ata/ata_piix.o
+  AR      drivers/ata/built-in.a
+  AR      drivers/built-in.a
+  AR      built-in.a
+  AR      vmlinux.a
+  LD      vmlinux.o
+  OBJCOPY modules.builtin.modinfo
+  GEN     modules.builtin
+  MODPOST vmlinux.symvers
+  UPD     include/generated/utsversion.h
+  CC      init/version-timestamp.o
+  KSYMS   .tmp_vmlinux0.kallsyms.S
+  AS      .tmp_vmlinux0.kallsyms.o
+  LD      .tmp_vmlinux1
+  NM      .tmp_vmlinux1.syms
+  KSYMS   .tmp_vmlinux1.kallsyms.S
+  AS      .tmp_vmlinux1.kallsyms.o
+  LD      .tmp_vmlinux2
+  NM      .tmp_vmlinux2.syms
+  KSYMS   .tmp_vmlinux2.kallsyms.S
+  AS      .tmp_vmlinux2.kallsyms.o
+  LD      vmlinux
+  NM      System.map
+  SORTTAB vmlinux
+  RELOCS  arch/x86/boot/compressed/vmlinux.relocs
+  RSTRIP  vmlinux
+  CC      arch/x86/boot/version.o
+  VOFFSET arch/x86/boot/compressed/../voffset.h
+  OBJCOPY arch/x86/boot/compressed/vmlinux.bin
+  CC      arch/x86/boot/compressed/kaslr.o
+  GZIP    arch/x86/boot/compressed/vmlinux.bin.gz
+  CC      arch/x86/boot/compressed/misc.o
+  MKPIGGY arch/x86/boot/compressed/piggy.S
+  AS      arch/x86/boot/compressed/piggy.o
+  LD      arch/x86/boot/compressed/vmlinux
+  ZOFFSET arch/x86/boot/zoffset.h
+  OBJCOPY arch/x86/boot/vmlinux.bin
+  AS      arch/x86/boot/header.o
+  LD      arch/x86/boot/setup.elf
+  OBJCOPY arch/x86/boot/setup.bin
+  BUILD   arch/x86/boot/bzImage
+Kernel: arch/x86/boot/bzImage is ready  (#7)
+kernel done: work/out/bzImage

@@ -24,6 +24,12 @@ htop mc ncdu tree jq zip unzip file dialog openssh-client
 fonts-liberation fonts-dejavu fonts-noto-core fonts-ubuntu xfonts-base
 firmware-iwlwifi firmware-amd-graphics firmware-misc-nonfree
 firmware-realtek firmware-atheros firmware-brcm80211
+wine wine32 wine64 winetricks
+obs-studio gparted transmission qt5ct
+supertux supertuxkart extremetuxracer frozen-bubble
+stellarator scummvm
+7zip rclone exfatprogs ntfs-3g testdisk
+python3-numpy python3-matplotlib
 "
 
 if [ ! -d "$DIR/bin" ]; then
@@ -46,6 +52,7 @@ echo 'keyboard-configuration keyboard-configuration/layout select English (US)' 
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive debconf-set-selections /tmp/preseed
 rm -f "$DIR/tmp/preseed"
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive dpkg --configure -a
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive dpkg --add-architecture i386
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get update
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y $PKGS
 
@@ -83,16 +90,41 @@ cat > "$DIR/root/.jwm/jwmrc" <<'EOF'
   <Menu name="Programs" title="Programs">
     <Program label="Firefox" icon="firefox-esr">firefox-esr</Program>
     <Program label="Thunderbird">thunderbird</Program>
-    <Separator/>
-    <Program label="LibreOffice Writer">libreoffice --writer</Program>
-    <Program label="LibreOffice Calc">libreoffice --calc</Program>
-    <Program label="GIMP">gimp</Program>
-    <Program label="Inkscape">inkscape</Program>
-    <Program label="Blender">blender</Program>
-    <Separator/>
-    <Program label="VLC">vlc</Program>
     <Program label="Files">pcmanfm</Program>
     <Program label="Terminal">xterm</Program>
+    <Separator/>
+    <Menu name="office" label="Office">
+      <Program label="LibreOffice Writer">libreoffice --writer</Program>
+      <Program label="LibreOffice Calc">libreoffice --calc</Program>
+      <Program label="LibreOffice Impress">libreoffice --impress</Program>
+    </Menu>
+    <Menu name="graphics" label="Graphics">
+      <Program label="GIMP">gimp</Program>
+      <Program label="Inkscape">inkscape</Program>
+      <Program label="Blender">blender</Program>
+    </Menu>
+    <Menu name="media" label="Media">
+      <Program label="VLC">vlc</Program>
+      <Program label="mpv">mpv</Program>
+      <Program label="Audacity">audacity</Program>
+      <Program label="OBS Studio">obs</Program>
+    </Menu>
+    <Menu name="games" label="Games">
+      <Program label="SuperTux">supertux</Program>
+      <Program label="SuperTuxKart">supertuxkart</Program>
+      <Program label="Extreme Tux Racer">extremetuxracer</Program>
+      <Program label="Frozen Bubble">frozen-bubble</Program>
+      <Program label="ScummVM">scummvm</Program>
+      <Program label="Stellarator">stellarator</Program>
+    </Menu>
+    <Separator/>
+    <Menu name="tools" label="System tools">
+      <Program label="GParted">gparted</Program>
+      <Program label="htop">xterm -e htop</Program>
+      <Program label="Transmission">transmission-gtk</Program>
+      <Program label="Wine">wine</Program>
+      <Program label="Winetricks">winetricks</Program>
+    </Menu>
   </Menu>
   <Menu name="System" title="System">
     <Program label="Top">xterm -e htop</Program>

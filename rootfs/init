@@ -12,20 +12,28 @@ mount -t tmpfs tmpfs /tmp
 
 say() { echo "hammeros-init: $*"; }
 
-# candidate block devices: whole cdroms, then partitions of disks
-DEVS=""
-for d in /dev/sr*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
-for d in /dev/sd?? /dev/vd?? /dev/nvme?n1p*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
+# candidate block devices: whole cdroms, then partitions of disks.
+# CD/USB probing is slow — retry the whole scan a few times.
+find_devs() {
+    DEVS=""
+    for d in /dev/sr*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
+    for d in /dev/sd?? /dev/vd?? /dev/nvme?n1p*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
+}
 
 mkdir -p /mnt/media /mnt/live /mnt/root
 LIVE=""
-for d in $DEVS; do
-    for fs in iso9660 squashfs vfat ext4 ntfs; do
-        mount -t $fs -o ro "$d" /mnt/media 2>/dev/null || continue
-        if [ -f /mnt/media/live.squashfs ]; then LIVE=/mnt/media/live.squashfs; break 2; fi
-        if [ -f /mnt/media/live/live.squashfs ]; then LIVE=/mnt/media/live/live.squashfs; break 2; fi
-        umount /mnt/media
+for attempt in 1 2 3 4 5 6; do
+    find_devs
+    for d in $DEVS; do
+        for fs in iso9660 squashfs vfat ext4 ntfs; do
+            mount -t $fs -o ro "$d" /mnt/media 2>/dev/null || continue
+            if [ -f /mnt/media/live.squashfs ]; then LIVE=/mnt/media/live.squashfs; break 3; fi
+            if [ -f /mnt/media/live/live.squashfs ]; then LIVE=/mnt/media/live/live.squashfs; break 3; fi
+            umount /mnt/media
+        done
     done
+    say "scan $attempt: no layer yet ($DEVS) — waiting"
+    sleep 2
 done
 
 if [ -n "$LIVE" ]; then
