@@ -1,0 +1,129 @@
+kernel: linux-6.12.116
+have: linux-6.12.116.tar.xz
+have: busybox-1.36.1.tar.bz2
+have: musl-1.2.5.tar.gz
+have: dropbear-2024.86.tar.bz2
+have: links-2.30.tar.gz
+fetch done
+[sudo: authenticate] Password: 
+== package install
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+xorg is already the newest version (1:7.7+23).
+xserver-xorg is already the newest version (1:7.7+23).
+xserver-xorg-video-all is already the newest version (1:7.7+23).
+xserver-xorg-input-all is already the newest version (1:7.7+23).
+x11-utils is already the newest version (7.7+5).
+xterm is already the newest version (379-1).
+slim is already the newest version (1.3.6-5.3).
+jwm is already the newest version (2.4.3-1).
+pcmanfm is already the newest version (1.3.2-1).
+mousepad is already the newest version (0.5.10-2).
+lxtask is already the newest version (0.1.10-1).
+galculator is already the newest version (2.1.4-1.2).
+firefox-esr is already the newest version (140.12.0esr-1~deb12u1).
+thunderbird is already the newest version (1:140.12.0esr-1~deb12u1).
+libreoffice-writer is already the newest version (4:7.4.7-1+deb12u14).
+libreoffice-writer set to manually installed.
+libreoffice-calc is already the newest version (4:7.4.7-1+deb12u14).
+libreoffice-calc set to manually installed.
+libreoffice-impress is already the newest version (4:7.4.7-1+deb12u14).
+libreoffice-impress set to manually installed.
+gimp is already the newest version (2.10.34-1+deb12u10).
+inkscape is already the newest version (1.2.2-2+b1).
+vlc is already the newest version (3.0.23-0+deb12u1).
+mpv is already the newest version (0.35.1-4).
+ffmpeg is already the newest version (7:5.1.9-0+deb12u1).
+imagemagick is already the newest version (8:6.9.11.60+dfsg-1.6+deb12u11).
+audacity is already the newest version (3.2.4+dfsg-1).
+network-manager is already the newest version (1.42.4-1+deb12u1).
+wpasupplicant is already the newest version (2:2.10-12+deb12u3).
+pipewire-audio is already the newest version (0.3.65-3+deb12u1).
+wireplumber is already the newest version (0.4.13-1).
+alsa-utils is already the newest version (1.2.8-1).
+build-essential is already the newest version (12.9).
+python3 is already the newest version (3.11.2-1+b1).
+python3-pip is already the newest version (23.0.1+dfsg-1).
+git is already the newest version (1:2.39.5-0+deb12u3).
+curl is already the newest version (7.88.1-10+deb12u15).
+wget is already the newest version (1.21.3-1+deb12u1).
+vim is already the newest version (2:9.0.1378-2+deb12u2).
+nano is already the newest version (7.2-1+deb12u1).
+htop is already the newest version (3.2.2-2).
+mc is already the newest version (3:4.8.29-2).
+ncdu is already the newest version (1.18-0.2).
+tree is already the newest version (2.1.0-1).
+jq is already the newest version (1.6-2.1+deb12u2).
+zip is already the newest version (3.0-13).
+unzip is already the newest version (6.0-28).
+file is already the newest version (1:5.44-3).
+dialog is already the newest version (1.3-20230209-1).
+openssh-client is already the newest version (1:9.2p1-2+deb12u10).
+fonts-liberation is already the newest version (1:1.07.4-11).
+fonts-dejavu is already the newest version (2.37-6).
+fonts-noto-core is already the newest version (20201225-1).
+fonts-ubuntu is already the newest version (0.83-6).
+xfonts-base is already the newest version (1:1.0.5+nmu1).
+firmware-iwlwifi is already the newest version (20230210-5).
+firmware-amd-graphics is already the newest version (20230210-5).
+firmware-misc-nonfree is already the newest version (20230210-5).
+firmware-realtek is already the newest version (20230210-5).
+firmware-atheros is already the newest version (20230210-5).
+firmware-brcm80211 is already the newest version (20230210-5).
+wine is already the newest version (8.0~repack-4).
+wine64 is already the newest version (8.0~repack-4).
+winetricks is already the newest version (20230212-2).
+obs-studio is already the newest version (29.0.2+dfsg-1+b1).
+gparted is already the newest version (1.3.1-1).
+transmission is already the newest version (3.00-2.1+deb12u1).
+qt5ct is already the newest version (1.5-1+b4).
+extremetuxracer is already the newest version (0.8.2-1).
+frozen-bubble is already the newest version (2.212-11+b1).
+7zip is already the newest version (22.01+really26.01+dfsg-0+deb12u1).
+rclone is already the newest version (1.60.1+dfsg-2+b5).
+exfatprogs is already the newest version (1.2.0-1+deb12u1).
+ntfs-3g is already the newest version (1:2022.10.3-1+deb12u3).
+testdisk is already the newest version (7.1-5+nmu1).
+python3-numpy is already the newest version (1:1.24.2-1+deb12u1).
+The following additional packages will be installed:
+  libieee1284-3 libsdl2-net-2.0-0 libspeechd2 scummvm-data
+Suggested packages:
+  fluidsynth | timidity beneath-a-steel-sky drascula
+  flight-of-the-amazon-queen lure-of-the-temptress
+The following NEW packages will be installed:
+  libieee1284-3 libsdl2-net-2.0-0 libspeechd2 scummvm scummvm-data
+0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+Need to get 72.5 MB of archives.
+After this operation, 142 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libieee1284-3 amd64 0.2.11-14 [29.2 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libsdl2-net-2.0-0 amd64 2.2.0+dfsg-2 [12.6 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libspeechd2 amd64 0.11.4-2 [20.3 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1 [51.0 MB]
+Ign:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1
+Ign:5 http://deb.debian.org/debian bookworm/main amd64 scummvm amd64 2.7.0+dfsg-1
+Ign:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1
+Ign:5 http://deb.debian.org/debian bookworm/main amd64 scummvm amd64 2.7.0+dfsg-1
+Ign:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1
+Ign:5 http://deb.debian.org/debian bookworm/main amd64 scummvm amd64 2.7.0+dfsg-1
+Ign:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1
+Err:5 http://deb.debian.org/debian bookworm/main amd64 scummvm amd64 2.7.0+dfsg-1
+  Temporary failure resolving 'deb.debian.org' [IP: 2a04:4e42:13::644 80]
+Err:4 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1
+  Connection timed out [IP: 2a04:4e42:13::644 80]
+Fetched 62.1 kB in 1min 26s (724 B/s)
+E: Failed to fetch http://deb.debian.org/debian/pool/main/s/scummvm/scummvm-data_2.7.0%2bdfsg-1_all.deb  Connection timed out [IP: 2a04:4e42:13::644 80]
+E: Failed to fetch http://deb.debian.org/debian/pool/main/s/scummvm/scummvm_2.7.0%2bdfsg-1_amd64.deb  Temporary failure resolving 'deb.debian.org' [IP: 2a04:4e42:13::644 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?

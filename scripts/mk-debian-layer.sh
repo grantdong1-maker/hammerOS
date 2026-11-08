@@ -15,7 +15,7 @@ PKGS="
 xorg xserver-xorg xserver-xorg-video-all xserver-xorg-input-all
 x11-utils xterm slim jwm pcmanfm mousepad lxtask galculator
 firefox-esr thunderbird
-libreoffice gimp inkscape
+libreoffice-writer libreoffice-calc libreoffice-impress gimp inkscape
 vlc mpv ffmpeg imagemagick audacity
 network-manager wpasupplicant
 pipewire-audio wireplumber alsa-utils
@@ -24,12 +24,11 @@ htop mc ncdu tree jq zip unzip file dialog openssh-client
 fonts-liberation fonts-dejavu fonts-noto-core fonts-ubuntu xfonts-base
 firmware-iwlwifi firmware-amd-graphics firmware-misc-nonfree
 firmware-realtek firmware-atheros firmware-brcm80211
-wine wine32 wine64 winetricks
+wine wine64 winetricks
 obs-studio gparted transmission qt5ct
-supertux supertuxkart extremetuxracer frozen-bubble
-stellarator scummvm
+extremetuxracer frozen-bubble scummvm
 7zip rclone exfatprogs ntfs-3g testdisk
-python3-numpy python3-matplotlib
+python3-numpy
 "
 
 if [ ! -d "$DIR/bin" ]; then
@@ -43,6 +42,10 @@ cat > "$DIR/etc/apt/apt.conf.d/99hammeros" <<'EOF'
 APT::Install-Recommends "false";
 APT::AutoRemove::RecommendsImportant "false";
 EOF
+# the host's IPv6 path to deb.debian.org is flaky here — always fetch over IPv4
+cat > "$DIR/etc/apt/apt.conf.d/71ipv4" <<'EOF'
+Acquire::ForceIPv4 "true";
+EOF
 # headless chroot: no debconf dialogs
 cat > "$DIR/etc/apt/apt.conf.d/71noninteractive" <<'EOF'
 apt::configure-options {"DEBIAN_FRONTEND"="noninteractive"; "APT::Color"="0";};
@@ -52,7 +55,15 @@ echo 'keyboard-configuration keyboard-configuration/layout select English (US)' 
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive debconf-set-selections /tmp/preseed
 rm -f "$DIR/tmp/preseed"
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive dpkg --configure -a
-chroot "$DIR" env DEBIAN_FRONTEND=noninteractive dpkg --add-architecture i386
+
+# De-bloat BEFORE installing anything new: 32-bit Wine multiarch and the
+# megabyte-heavy game data were what pushed the layer to 2.3 GB.
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get purge -y \
+    supertux supertuxkart wine32 python3-matplotlib libreoffice-draw \
+    libreoffice-base libreoffice-math libreoffice-help-en-us 2>/dev/null || true
+chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge -y 2>/dev/null || true
+chroot "$DIR" dpkg --remove-architecture i386 2>/dev/null || true
+
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get update
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y $PKGS
 
@@ -110,12 +121,9 @@ cat > "$DIR/root/.jwm/jwmrc" <<'EOF'
       <Program label="OBS Studio">obs</Program>
     </Menu>
     <Menu name="games" label="Games">
-      <Program label="SuperTux">supertux</Program>
-      <Program label="SuperTuxKart">supertuxkart</Program>
       <Program label="Extreme Tux Racer">extremetuxracer</Program>
       <Program label="Frozen Bubble">frozen-bubble</Program>
       <Program label="ScummVM">scummvm</Program>
-      <Program label="Stellarator">stellarator</Program>
     </Menu>
     <Separator/>
     <Menu name="tools" label="System tools">
@@ -158,6 +166,14 @@ cat > "$DIR/root/.jwm/jwmrc" <<'EOF'
 EOF
 # blender is a nice-to-have; add if apt had it (bookworm main does)
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y blender 2>/dev/null || true
+
+echo "== trim to the 1.5 GB target"
+# translations nobody selects during a live session, plus HTML docs
+find "$DIR/usr/share/locale" -mindepth 1 -maxdepth 1 -type d \
+    ! -name en ! -name en_US ! -name locale -exec rm -rf {} + 2>/dev/null || true
+rm -rf "$DIR/usr/share/help" "$DIR/usr/share/gnome-help"
+find "$DIR/usr/share/doc" -maxdepth 2 -type d -name html -exec rm -rf {} + 2>/dev/null || true
+du -xsh "$DIR" | awk '{print "layer installed size: " $1}'
 
 echo "== squash"
 rm -f "$OUT.tmp"
