@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!-- hammerOS "Forge" desktop — JWM 2.4, grey + ember theme -->
+<JWM>
+
+  <RootMenu onroot="12">
+    <Menu label="Programs">
+      <Program label="Firefox" icon="firefox-esr">firefox-esr</Program>
+      <Program label="Thunderbird" icon="thunderbird">thunderbird</Program>
+      <Separator/>
+      <Menu label="Office">
+        <Program label="LibreOffice Writer">libreoffice --writer</Program>
+        <Program label="LibreOffice Calc">libreoffice --calc</Program>
+        <Program label="LibreOffice Impress">libreoffice --impress</Program>
+      </Menu>
+      <Menu label="Graphics">
+        <Program label="GIMP">gimp</Program>
+        <Program label="Inkscape">inkscape</Program>
+        <Program label="Blender">blender</Program>
+        <Program label="ImageMagick">xterm -e convert</Program>
+      </Menu>
+      <Menu label="Media">
+        <Program label="VLC">vlc</Program>
+        <Program label="mpv">mpv</Program>
+        <Program label="Audacity">audacity</Program>
+        <Program label="OBS Studio">obs</Program>
+      </Menu>
+      <Menu label="Games">
+        <Program label="Extreme Tux Racer">etr</Program>
+        <Program label="Frozen Bubble">frozen-bubble</Program>
+        <Program label="ScummVM">scummvm</Program>
+      </Menu>
+      <Separator/>
+      <Menu label="System tools">
+        <Program label="GParted">gparted</Program>
+        <Program label="htop">xterm -e htop</Program>
+        <Program label="Midnight Commander">xterm -e mc</Program>
+        <Program label="Transmission">transmission-gtk</Program>
+        <Program label="Wine">wine</Program>
+        <Program label="Winetricks">winetricks</Program>
+      </Menu>
+    </Menu>
+    <Program label="Files" icon="system-file-manager">pcmanfm</Program>
+    <Program label="Terminal" icon="utilities-terminal">xterm</Program>
+    <Program label="Text Editor" icon="accessories-text-editor">mousepad</Program>
+    <Separator/>
+    <Restart label="Restart" icon="reload"/>
+    <Exit label="Log Out" confirm="true" icon="exit"/>
+  </RootMenu>
+
+  <Tray x="0" y="-1" height="28">
+    <TrayButton label=" hammer ">root:1</TrayButton>
+    <Spacer width="2"/>
+    <Pager labeled="true"/>
+    <TaskList maxwidth="200"/>
+    <Spacer/>
+    <Dock/>
+    <Clock format="%H:%M"/>
+  </Tray>
+
+  <Desktops width="4" height="1">
+    <Background type="solid">#26292e</Background>
+  </Desktops>
+
+
+  <MoveMode>opaque</MoveMode>
+  <ResizeMode>opaque</ResizeMode>
+  <FocusModel>sloppy</FocusModel>
+  <DoubleClickSpeed>400</DoubleClickSpeed>
+
+  <WindowStyle decorations="motif">
+    <Font>Sans-11:bold</Font>
+    <Width>3</Width>
+    <Corner>0</Corner>
+    <Foreground>#e6e6e6</Foreground>
+    <Background>#2b2f33</Background>
+    <Active>
+      <Foreground>#ffffff</Foreground>
+      <Background>#ff8f40</Background>
+    </Active>
+  </WindowStyle>
+
+  <TrayStyle decorations="motif">
+    <Font>Sans-11</Font>
+    <Background>#1d2023</Background>
+    <Foreground>#e6e6e6</Foreground>
+  </TrayStyle>
+
+  <TaskListStyle list="all" group="false">
+    <Font>Sans-11</Font>
+    <Foreground>#e6e6e6</Foreground>
+    <Background>#1d2023</Background>
+    <Active>
+      <Foreground>#1d2023</Foreground>
+      <Background>#ff8f40</Background>
+    </Active>
+    <Minimized>
+      <Foreground>#888888</Foreground>
+      <Background>#1d2023</Background>
+    </Minimized>
+  </TaskListStyle>
+
+  <PagerStyle>
+    <Foreground>#3a3f45</Foreground>
+    <Background>#1d2023</Background>
+    <Text>#e6e6e6</Text>
+    <Active>
+      <Foreground>#1d2023</Foreground>
+      <Background>#ff8f40</Background>
+    </Active>
+  </PagerStyle>
+
+  <MenuStyle decorations="motif">
+    <Font>Sans-11</Font>
+    <Foreground>#e6e6e6</Foreground>
+    <Background>#26292e</Background>
+    <Active>
+      <Foreground>#1d2023</Foreground>
+      <Background>#ff8f40</Background>
+    </Active>
+  </MenuStyle>
+
+  <PopupStyle>
+    <Font>Sans-10</Font>
+    <Foreground>#e6e6e6</Foreground>
+    <Background>#1d2023</Background>
+  </PopupStyle>
+
+  <IconPath>/usr/share/icons/hicolor/scalable/apps</IconPath>
+  <IconPath>/usr/share/icons/hicolor/32x32/apps</IconPath>
+  <IconPath>/usr/share/pixmaps</IconPath>
+
+  <Key mask="A" key="F1">root:1</Key>
+  <Key mask="A" key="F2">exec:xterm</Key>
+  <Key mask="A" key="F4">close</Key>
+  <Key mask="A" key="F10">maximize</Key>
+  <Key mask="A" key="Right">rdesktop</Key>
+  <Key mask="A" key="Left">ldesktop</Key>
+  <Mouse context="root" button="3">root:1</Mouse>
+
+</JWM>

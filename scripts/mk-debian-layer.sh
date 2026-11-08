@@ -90,80 +90,9 @@ exec dbus-launch --exit-with-session jwm
 EOF
 chmod 755 "$DIR/root/.xinitrc"
 
-cat > "$DIR/root/.jwm/jwmrc" <<'EOF'
-<JWM>
-  <Tray height="28" valign="bottom">
-    <Label width="10">hammerOS</Label>
-    <Button action="menu"> Programs </Button>
-    <Spacer/>
-    <Clock format="%H:%M"/>
-  </Tray>
-  <Menu name="Programs" title="Programs">
-    <Program label="Firefox" icon="firefox-esr">firefox-esr</Program>
-    <Program label="Thunderbird">thunderbird</Program>
-    <Program label="Files">pcmanfm</Program>
-    <Program label="Terminal">xterm</Program>
-    <Separator/>
-    <Menu name="office" label="Office">
-      <Program label="LibreOffice Writer">libreoffice --writer</Program>
-      <Program label="LibreOffice Calc">libreoffice --calc</Program>
-      <Program label="LibreOffice Impress">libreoffice --impress</Program>
-    </Menu>
-    <Menu name="graphics" label="Graphics">
-      <Program label="GIMP">gimp</Program>
-      <Program label="Inkscape">inkscape</Program>
-      <Program label="Blender">blender</Program>
-    </Menu>
-    <Menu name="media" label="Media">
-      <Program label="VLC">vlc</Program>
-      <Program label="mpv">mpv</Program>
-      <Program label="Audacity">audacity</Program>
-      <Program label="OBS Studio">obs</Program>
-    </Menu>
-    <Menu name="games" label="Games">
-      <Program label="Extreme Tux Racer">extremetuxracer</Program>
-      <Program label="Frozen Bubble">frozen-bubble</Program>
-      <Program label="ScummVM">scummvm</Program>
-    </Menu>
-    <Separator/>
-    <Menu name="tools" label="System tools">
-      <Program label="GParted">gparted</Program>
-      <Program label="htop">xterm -e htop</Program>
-      <Program label="Transmission">transmission-gtk</Program>
-      <Program label="Wine">wine</Program>
-      <Program label="Winetricks">winetricks</Program>
-    </Menu>
-  </Menu>
-  <Menu name="System" title="System">
-    <Program label="Top">xterm -e htop</Program>
-    <Restart/>
-    <Exit/>
-  </Menu>
-  <TrayX>
-    <Button action="rootmenu"> hammer </Button>
-    <Spacer/>
-    <Pager/>
-  </TrayX>
-  <Group>
-    <Option>maximized</Option>
-  </Group>
-  <MoveMode>border</MoveMode>
-  <OpaqueMove>1</OpaqueMove>
-  <ResizeMode>outline</ResizeMode>
-  <Theme>
-    <Font name="sans" size="11"/>
-    <Background color="#26292e"/>
-    <TrayColor color="#1d2023"/>
-    <MenuColor color="#26292e"/>
-    <MenuTitleColor color="#ff8f40"/>
-    <MenuActiveColor color="#33373b"/>
-    <MenuActiveTextColor color="#ff8f40"/>
-    <ButtonColor color="#26292e"/>
-    <Text color="#e6e6e6"/>
-    <TitleText color="#ff8f40"/>
-  </Theme>
-</JWM>
-EOF
+install -d -m 755 "$DIR/root/.jwm"
+cp "$(pwd)/scripts/jwmrc" "$DIR/root/.jwm/jwmrc"
+chroot "$DIR" jwm -p -f /root/.jwm/jwmrc || echo "  (jwm config did not parse)"
 # blender is a nice-to-have; add if apt had it (bookworm main does)
 chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y blender 2>/dev/null || true
 

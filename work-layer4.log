@@ -408,3 +408,147 @@ Get:7 http://deb.debian.org/debian bookworm/main amd64 libreoffice-draw amd64 4:
 Get:8 http://deb.debian.org/debian bookworm/main amd64 libreoffice-impress amd64 4:7.4.7-1+deb12u14 [1118 kB]
 Get:9 http://deb.debian.org/debian bookworm/main amd64 scummvm-data all 2.7.0+dfsg-1 [51.0 MB]
 Get:10 http://deb.debian.org/debian bookworm/main amd64 scummvm amd64 2.7.0+dfsg-1 [21.5 MB]
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 34.1 MB in 37s (930 kB/s)
+E: Can not write log (Is /dev/pts mounted?) - posix_openpt (19: No such device)
+Selecting previously unselected package libbox2d2:amd64.
+(Reading database ... 68666 files and directories currently installed.)
+Preparing to unpack .../00-libbox2d2_2.4.1-3_amd64.deb ...
+Unpacking libbox2d2:amd64 (2.4.1-3) ...
+Selecting previously unselected package libfreehand-0.1-1.
+Preparing to unpack .../01-libfreehand-0.1-1_0.1.2-3_amd64.deb ...
+Unpacking libfreehand-0.1-1 (0.1.2-3) ...
+Selecting previously unselected package libieee1284-3:amd64.
+Preparing to unpack .../02-libieee1284-3_0.2.11-14_amd64.deb ...
+Unpacking libieee1284-3:amd64 (0.2.11-14) ...
+Selecting previously unselected package libmspub-0.1-1:amd64.
+Preparing to unpack .../03-libmspub-0.1-1_0.1.4-3+b3_amd64.deb ...
+Unpacking libmspub-0.1-1:amd64 (0.1.4-3+b3) ...
+Selecting previously unselected package libpagemaker-0.0-0:amd64.
+Preparing to unpack .../04-libpagemaker-0.0-0_0.0.4-1_amd64.deb ...
+Unpacking libpagemaker-0.0-0:amd64 (0.0.4-1) ...
+Selecting previously unselected package libqxp-0.0-0.
+Preparing to unpack .../05-libqxp-0.0-0_0.0.2-1+b3_amd64.deb ...
+Unpacking libqxp-0.0-0 (0.0.2-1+b3) ...
+Selecting previously unselected package libzmf-0.0-0:amd64.
+Preparing to unpack .../06-libzmf-0.0-0_0.0.2-1+b5_amd64.deb ...
+Unpacking libzmf-0.0-0:amd64 (0.0.2-1+b5) ...
+Selecting previously unselected package libreoffice-draw.
+Preparing to unpack .../07-libreoffice-draw_4%3a7.4.7-1+deb12u14_amd64.deb ...
+Unpacking libreoffice-draw (4:7.4.7-1+deb12u14) ...
+Selecting previously unselected package libreoffice-impress.
+Preparing to unpack .../08-libreoffice-impress_4%3a7.4.7-1+deb12u14_amd64.deb ...
+Unpacking libreoffice-impress (4:7.4.7-1+deb12u14) ...
+Selecting previously unselected package libsdl2-net-2.0-0:amd64.
+Preparing to unpack .../09-libsdl2-net-2.0-0_2.2.0+dfsg-2_amd64.deb ...
+Unpacking libsdl2-net-2.0-0:amd64 (2.2.0+dfsg-2) ...
+Selecting previously unselected package libspeechd2:amd64.
+Preparing to unpack .../10-libspeechd2_0.11.4-2_amd64.deb ...
+Unpacking libspeechd2:amd64 (0.11.4-2) ...
+Selecting previously unselected package scummvm-data.
+Preparing to unpack .../11-scummvm-data_2.7.0+dfsg-1_all.deb ...
+Unpacking scummvm-data (2.7.0+dfsg-1) ...
+Selecting previously unselected package scummvm.
+Preparing to unpack .../12-scummvm_2.7.0+dfsg-1_amd64.deb ...
+Unpacking scummvm (2.7.0+dfsg-1) ...
+Setting up libmspub-0.1-1:amd64 (0.1.4-3+b3) ...
+Setting up libsdl2-net-2.0-0:amd64 (2.2.0+dfsg-2) ...
+Setting up libpagemaker-0.0-0:amd64 (0.0.4-1) ...
+Setting up libzmf-0.0-0:amd64 (0.0.2-1+b5) ...
+Setting up libqxp-0.0-0 (0.0.2-1+b3) ...
+Setting up libspeechd2:amd64 (0.11.4-2) ...
+Setting up scummvm-data (2.7.0+dfsg-1) ...
+Setting up libfreehand-0.1-1 (0.1.2-3) ...
+Setting up libbox2d2:amd64 (2.4.1-3) ...
+Setting up libieee1284-3:amd64 (0.2.11-14) ...
+Setting up scummvm (2.7.0+dfsg-1) ...
+Setting up libreoffice-draw (4:7.4.7-1+deb12u14) ...
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/libreoffice/registry/draw.xcd with new version
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/libreoffice/registry/graphicfilter.xcd with new version
+Setting up libreoffice-impress (4:7.4.7-1+deb12u14) ...
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/libreoffice/registry/impress.xcd with new version
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/libreoffice/registry/ogltrans.xcd with new version
+Processing triggers for libc-bin (2.36-9+deb12u14) ...
+Processing triggers for man-db (2.11.2-2) ...
+Processing triggers for libreoffice-common (4:7.4.7-1+deb12u14) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+== hammerOS overlay config
+Reading package lists...
+Building dependency tree...
+Reading state information...
+blender is already the newest version (3.4.1+dfsg-2+b1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+== trim to the 1.5 GB target
+layer installed size: 4.7G
+== squash
+Parallel mksquashfs: Using 12 processors
+Creating 4.0 filesystem on /home/grant/Downloads/hammeros/work/out/live.squashfs.tmp, block size 1048576.
+[/                                                           ]     0/44162   0%[-                                                           ]   400/69281   0%[=/                                                          ]  1200/69281   1%[========|                                                   ]  9600/69281  13%[==========-                                                 ] 12700/69281  18%[============\                                               ] 15100/69281  21%[============|                                               ] 15200/69281  21%[=================\                                          ] 20000/69281  28%[==========================================================| ] 68400/69281  98%[===========================================================/] 69281/69281 100%
+
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 1048576
+	compressed data, compressed metadata, compressed fragments,
+	compressed xattrs, compressed ids
+	duplicates are removed
+Filesystem size 1273847.29 Kbytes (1243.99 Mbytes)
+	28.06% of uncompressed filesystem size (4539405.67 Kbytes)
+Inode table size 552858 bytes (539.90 Kbytes)
+	23.10% of uncompressed inode table size (2393311 bytes)
+Directory table size 637656 bytes (622.71 Kbytes)
+	34.15% of uncompressed directory table size (1867306 bytes)
+Xattr table size 40 bytes (0.04 Kbytes)
+	100.00% of uncompressed xattr table size (40 bytes)
+Number of duplicate files found 4535
+Number of inodes 72340
+Number of files 63158
+Number of fragments 1465
+Number of symbolic links 3715
+Number of device nodes 8
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 5459
+Number of hard-links 18
+Number of ids (unique uids + gids) 12
+Number of uids 4
+	root (0)
+	_apt (42)
+	unknown (997)
+	man (6)
+Number of gids 10
+	root (0)
+	shadow (42)
+	netdev (106)
+	uuidd (105)
+	tty (5)
+	utmp (43)
+	staff (50)
+	man (12)
+	adm (4)
+	mail (8)
+-rw-r--r-- 1 root root 1.3G Nov  8 19:37 /home/grant/Downloads/hammeros/work/out/live.squashfs
+LAYER_DONE
