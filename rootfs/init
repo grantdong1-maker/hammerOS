@@ -1,8 +1,52 @@
 #!/bin/busybox sh
-# kernel exec's /init in the initramfs; bootstrap the mounts then hand off
-# to BusyBox init.
+# hammerOS init (initramfs) — live boot brain.
+# 1) locate /live.squashfs on the boot media (CD or USB stick)
+# 2) mount it read-only + tmpfs overlay (Puppy-style RAM operation)
+# 3) switch into it (systemd / slim / X take over from there)
+# If no layer is found, fall back to the tiny 0.2 mode (busybox + hammerwm).
+
 mount -t proc proc /proc
-mount -t sysfs sysfs /sys || true
-mount -t devtmpfs devtmpfs /dev || true
-mount -t tmpfs tmpfs /tmp || true
+mount -t sysfs sysfs /sys 2>/dev/null
+mount -t devtmpfs devtmpfs /dev 2>/dev/null
+mount -t tmpfs tmpfs /tmp
+
+say() { echo "hammeros-init: $*"; }
+
+# candidate block devices: whole cdroms, then partitions of disks
+DEVS=""
+for d in /dev/sr*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
+for d in /dev/sd?? /dev/vd?? /dev/nvme?n1p*; do [ -e "$d" ] && DEVS="$DEVS $d"; done
+
+mkdir -p /mnt/media /mnt/live /mnt/root
+LIVE=""
+for d in $DEVS; do
+    for fs in iso9660 squashfs vfat ext4 ntfs; do
+        mount -t $fs -o ro "$d" /mnt/media 2>/dev/null || continue
+        if [ -f /mnt/media/live.squashfs ]; then LIVE=/mnt/media/live.squashfs; break 2; fi
+        if [ -f /mnt/media/live/live.squashfs ]; then LIVE=/mnt/media/live/live.squashfs; break 2; fi
+        umount /mnt/media
+    done
+done
+
+if [ -n "$LIVE" ]; then
+    say "found $LIVE"
+    mount -o loop,ro "$LIVE" /mnt/live || { say "squashfs mount failed"; }
+    mkdir -p /tmp/upper /tmp/work
+    mount -t overlay overlay \
+        -o lowerdir=/mnt/live,upperdir=/tmp/upper,workdir=/tmp/work /mnt/root \
+        || say "overlay failed, using squashfs directly"
+    [ -d /mnt/root/bin ] || mount -o remount,ro /mnt/live /mnt/root 2>/dev/null
+    # fresh API filesystems for the new root
+    mount -t devtmpfs devtmpfs /mnt/root/dev 2>/dev/null
+    mkdir -p /mnt/root/proc /mnt/root/sys /mnt/root/run
+    mount -t proc proc /mnt/root/proc 2>/dev/null
+    mount -t sysfs sysfs /mnt/root/sys 2>/dev/null
+    mount -t tmpfs tmpfs /mnt/root/run 2>/dev/null
+    say "switching root → Debian layer (systemd)"
+    exec run-init /mnt/root /sbin/init <> /dev/console > /dev/console 2>&1
+fi
+
+# ---- fallback: tiny mode --------------------------------------------------
+say "no live layer found — booting tiny mode (hammerwm)"
+mount -t tmpfs tmpfs /tmp 2>/dev/null
 exec /sbin/init

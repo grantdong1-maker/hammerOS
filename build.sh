@@ -19,7 +19,7 @@ VER_MUSL="1.2.5"
 VER_DROP="2024.86"
 VER_LINKS="2.30"
 VER_KERN="${VER_KERN:-auto}"     # auto = detect newest 6.12 LTS patch
-ISOVER="0.2.0"
+ISOVER="0.3.0"
 JOBS="$(nproc)"
 
 fetch() {
@@ -130,6 +130,17 @@ stage_rootfs() {
     echo "rootfs assembled"
 }
 
+stage_layer() {
+    [ -f "$OUT/live.squashfs" ] && { echo "layer: already built"; return 0; }
+    stage_fetch
+    if [ -n "${HAMMER_SUDO:-}" ]; then
+        printf '%s\n' "$HAMMER_SUDO" | sudo -S -v
+        sudo bash scripts/mk-debian-layer.sh
+    else
+        sudo -v && sudo bash scripts/mk-debian-layer.sh
+    fi
+}
+
 stage_iso() {
     stage_rootfs
     # ---- 1) initramfs cpio.gz ------------------------------------------
@@ -145,6 +156,10 @@ stage_iso() {
     rm -rf "$IT"; mkdir -p "$IT/boot/isolinux"
     cp "$OUT/bzImage" "$IT/boot/"
     cp "$OUT/initramfs.cpio.gz" "$IT/boot/"
+    if [ -f "$OUT/live.squashfs" ]; then
+        mkdir -p "$IT/live"
+        cp "$OUT/live.squashfs" "$IT/live/"
+    fi
     cp "$XB/isolinux.bin" "$IT/boot/isolinux/"
     if [ -f /usr/lib/syslinux/modules/bios/ldlinux.c32 ]; then
         cp /usr/lib/syslinux/modules/bios/ldlinux.c32 "$IT/boot/isolinux/"
@@ -154,6 +169,7 @@ stage_iso() {
     sed "s|@VERSION@|${ISOVER}|" boot/isolinux.cfg > "$IT/boot/isolinux/isolinux.cfg"
     local ISO="$SCRIPT_DIR/hammeros-${ISOVER}-amd64.iso"
     xorriso -as mkisofs -o "$ISO" \
+        -iso-level 3 \
         -b boot/isolinux/isolinux.bin -c boot/boot.cat \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
         -J -R -V "hammerOS ${ISOVER} Forge" "$IT"
@@ -165,8 +181,9 @@ stage_iso() {
 case "${1:-all}" in
     fetch)  stage_fetch ;;
     kernel) stage_kernel ;;
+    layer)  stage_layer ;;
     rootfs) stage_rootfs ;;
     iso)    stage_iso ;;
-    all)    stage_fetch; stage_kernel; stage_rootfs; stage_iso ;;
+    all)    stage_fetch; stage_kernel; stage_layer; stage_rootfs; stage_iso ;;
     *) echo "usage: $0 [fetch|kernel|rootfs|iso|all]"; exit 1 ;;
 esac

@@ -17,11 +17,13 @@ anvil
 
 | Target | Value |
 |---|---|
-| Live RAM footprint (idle GUI) | ≤ 1.5 GB |
-| ISO size (0.2 GUI) | < 30 MB |
-| Boot | BIOS first, UEFI on 0.3 |
-| Persistence | savefile overlay (0.3) |
-| GUI | framebuffer desktop + links browser (0.2) · X11 + JWM (0.3) |
+| ISO size | ~1.5 GB (feature-packed) |
+| Live RAM footprint (idle X) | ~1 GB |
+| Core | upstream kernel + musl + BusyBox — **compiled from source** |
+| Feature layer | Debian **bookworm** packages (older stable), squashfs, Puppy-style |
+| Boot | BIOS first, UEFI on 0.4 |
+| Persistence | savefile overlay (0.4) |
+| GUI | X11 + JWM (0.3) · framebuffer `hammerwm` failsafe kept |
 
 ## Build it
 
