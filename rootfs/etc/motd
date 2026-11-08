@@ -1,12 +1,11 @@
-hammerOS 0.1 "Forge" — built from source
+hammerOS 0.2 "Forge" — built from source, now with GUI
       /\
- /_\/\/ hammer: kernel + musl + busybox
+ /_\/\/ hammer: kernel + musl + busybox + links
  /\
 
   who       : root (no password)
+  gui       : the menu is running on tty1 (this screen); Alt+F2 = shell
+  web       : "Web" in the menu — links, graphical browser on the framebuffer
   ssh       : port 22 (dropbear, host keys generated on first boot)
   net       : eth0 via udhcpc dhcp
-  usage     : probe-> $ ip a   ·   editor `vi`   ·   http server: `httpd`
-
-  this session = 1 of 2 ttys (`Alt+F2` for the second). enjoy your stay.
   docs: /etc/os-release · build: github.com/grantdong1-maker/hammerOS

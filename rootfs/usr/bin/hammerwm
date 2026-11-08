@@ -1,0 +1,95 @@
+#!/bin/sh
+# hammerwm — hammerOS framebuffer desktop shell (0.2)
+# A dialog-driven launcher over the Linux console framebuffer.
+# Mouse: VBox/PS2 emulated mouse works in links; the menu is keyboard
+# (arrows/enter, q quits a submenu). Alt+F2 = raw shell, Alt+F1 = back here.
+
+export HOME=/root PATH=/bin:/usr/bin TERM=linux
+
+BANNER="
+   _/‾‾|
+  /  | |   hammerOS 0.2 \"Forge\"
+ |   |_|   framebuffer desktop
+  \\_/\\ |
+     ‾ ‾   $(cat /etc/os-release | cut -d'\"' -f2)"
+
+mem() { awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{printf "%.0f/%.0f MB",(t-a)/1024,t/1024}' /proc/meminfo; }
+ip()  { ip -o -4 addr show scope global 2>/dev/null | awk '{print $2": "$4}' | head -1; }
+
+filebrowser() {
+    d=${1:-/}
+    while :; do
+        set -- ".." "[up]"
+        for x in "$d"/* "$d"/.*; do
+            [ -e "$x" ] || continue
+            n=${x##*/}
+            [ "$n" = "." ] && continue
+            if [ -d "$x" ]; then
+                set -- "$@" "$n/" "[dir]"
+            else
+                set -- "$@" "$n" "[$(( $(wc -c <"$x" 2>/dev/null || echo 0) / 1024 ))K]"
+            fi
+        done
+        f=$(dialog --backtitle "hammerOS — files" --title " $d " \
+            --menu "pick an entry (esc = back)" 22 62 14 "$@" 3>&1 1>&2 2>&3) || return
+        [ "$f" = ".." ] && d=$(dirname "$d") && continue
+        p="$d/$f"
+        case "$f" in */) filebrowser "${p%/}"; continue;; esac
+        e=$(dialog --backtitle "hammerOS" --title " $f " \
+            --menu "what to do with it?" 12 50 3 \
+            view "open in textbox" edit "open in vi" run "execute" \
+            3>&1 1>&2 2>&3)
+        case "$e" in
+            view) dialog --backtitle "hammerOS" --title " $f " --textbox "$p" 22 70;;
+            edit) vi "$p";;
+            run)  [ -x "$p" ] && "$p"; read -r "press enter…";;
+        esac
+    done
+}
+
+netinfo() {
+    t=$(mktemp); { echo "interfaces:"; ip -o addr show scope global; echo
+      echo "routes:"; ip route; echo; echo "dns:"; cat /etc/resolv.conf; } > "$t"
+    dialog --backtitle "hammerOS" --title " network " --textbox "$t" 20 70
+    rm -f "$t"
+}
+
+sysinfo() {
+    t=$(mktemp); { echo "kernel  : $(uname -srm)"
+      echo "release : $(. /etc/os-release; echo $PRETTY_NAME)"
+      echo "memory  : $(mem)"
+      echo "cpu     : $(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2-)"
+      echo "cores   : $(nproc)"
+      echo "uptime  : $(cut -d. -f1 /proc/uptime)s"
+      echo "disk    : $(df -h / | awk 'NR==2{print $3" used"}')"
+      echo "tty     : $(tty)"; } > "$t"
+    dialog --backtitle "hammerOS" --title " system " --textbox "$t" 16 60
+    rm -f "$t"
+}
+
+while :; do
+    choice=$(dialog --clear --backtitle "hammerOS 0.2 Forge — $(mem) ram" \
+        --title " hammer " --menu "$BANNER" 22 62 8 \
+        "Web"        "links — graphical browser (framebuffer)" \
+        "Files"      "browse / edit / run anything" \
+        "Editor"     "vi — system-wide text editor" \
+        "Terminal"   "plain root shell" \
+        "Network"    "ip / routes / dhcp renew" \
+        "System"     "kernel, memory, cpu info" \
+        "Reboot"     "restart hammerOS" \
+        "Poweroff"   "shut down" \
+        3>&1 1>&2 2>&3)
+    rc=$?
+    clear
+    [ $rc -ne 0 ] && continue
+    case "$choice" in
+        Web)      links ;;
+        Files)    filebrowser ;;
+        Editor)   vi ;;
+        Terminal) sh ;;
+        Network)  netinfo ;;
+        System)   sysinfo ;;
+        Reboot)   reboot ;;
+        Poweroff) poweroff ;;
+    esac
+done

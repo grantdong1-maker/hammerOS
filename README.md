@@ -18,10 +18,10 @@ anvil
 | Target | Value |
 |---|---|
 | Live RAM footprint (idle GUI) | ≤ 1.5 GB |
-| ISO size (0.1 core) | < 150 MB |
-| Boot | BIOS first, UEFI on 0.2 |
-| Persistence | savefile overlay (0.2) |
-| GUI | X11 fbdev server + JWM (0.2) |
+| ISO size (0.2 GUI) | < 30 MB |
+| Boot | BIOS first, UEFI on 0.3 |
+| Persistence | savefile overlay (0.3) |
+| GUI | framebuffer desktop + links browser (0.2) · X11 + JWM (0.3) |
 
 ## Build it
 
@@ -41,9 +41,12 @@ Artifact: `hammeros-0.1.0-amd64.iso` + `.sha256`.
 
 ## Roadmap
 
-- 0.1 — boot/live: kernel, custom init, DHCP net, dropbear ssh
-- 0.2 — GUI: X (fbdev/kdrive from source) + JWM + st; savefile persistence
-- 0.3 — apps + forge-pkg (musl-compatible static packages, update channel)
+- 0.1 — boot/live: kernel, custom init, DHCP net, dropbear ssh ✅
+- 0.2 — GUI: framebuffer desktop (`hammerwm` menu shell) + **links** graphical
+  browser + mouse-aware apps + vi/files/terminal — all source-built ✅
+- 0.3 — X11 desktop: xorg-server + JWM + st from source (the big lift),
+  savefile persistence, UEFI boot
+- 0.4 — forge-pkg (musl-compatible static packages, update channel)
 
 ## Repo layout
 

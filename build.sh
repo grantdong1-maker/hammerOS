@@ -17,8 +17,9 @@ TC="$W/toolchain"
 VER_BUSY="1.36.1"
 VER_MUSL="1.2.5"
 VER_DROP="2024.86"
+VER_LINKS="2.30"
 VER_KERN="${VER_KERN:-auto}"     # auto = detect newest 6.12 LTS patch
-ISOVER="0.1.0"
+ISOVER="0.2.0"
 JOBS="$(nproc)"
 
 fetch() {
@@ -43,6 +44,7 @@ stage_fetch() {
     fetch "https://busybox.net/downloads/busybox-${VER_BUSY}.tar.bz2" "busybox-${VER_BUSY}.tar.bz2"
     fetch "https://musl.libc.org/releases/musl-${VER_MUSL}.tar.gz" "musl-${VER_MUSL}.tar.gz"
     fetch "https://matt.ucc.asn.au/dropbear/releases/dropbear-${VER_DROP}.tar.bz2" "dropbear-${VER_DROP}.tar.bz2"
+    fetch "http://links.twibright.com/download/links-${VER_LINKS}.tar.gz" "links-${VER_LINKS}.tar.gz"
     echo "fetch done"
 }
 
@@ -97,9 +99,21 @@ stage_rootfs() {
             make -j"$JOBS" PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp")
     fi
 
+    # ---- links (graphical framebuffer web browser) ------------------------
+    local lsrc="$SRC/links-${VER_LINKS}"
+    [ -d "$lsrc" ] || tar -xf "$SRC/links-${VER_LINKS}.tar.gz" -C "$SRC"
+    if [ ! -f "$lsrc/links" ]; then
+        (cd "$lsrc" &&
+            CC="$MUSL_CC" LDFLAGS="-static" ./configure \
+                --prefix=/usr --enable-fb --without-x --without-openssl \
+                --without-jpeg --without-tiff --without-gpm --without-librsvg \
+                --without-samba --without-directfb --without-unicode-lib &&
+            make -j"$JOBS")
+    fi
+
     # ---- assemble rootfs tree --------------------------------------------
     rm -rf "$ROOT"
-    mkdir -p "$ROOT"/{bin,sbin,etc,dev,proc,sys,run,tmp,var/log,tmpfs,root,mnt,media,etc/dropbear,usr/share/udhcpc}
+    mkdir -p "$ROOT"/{bin,sbin,etc,dev,proc,sys,run,tmp,var/log,tmpfs,root,mnt,media,etc/dropbear,usr/bin,usr/share/udhcpc}
     BB="$bsrc/busybox"
     install -m 755 "$BB" "$ROOT/bin/busybox"
     ( cd "$ROOT/bin" && "$BB" --list | while read -r x; do
@@ -107,11 +121,12 @@ stage_rootfs() {
     for d in dropbear dbclient dropbearkey dropbearconvert scp; do
         install -m 755 "$dsrc/$d" "$ROOT/bin/"
     done
+    [ -f "$lsrc/links" ] && install -m 755 "$lsrc/links" "$ROOT/bin/links"
     ln -sf /bin/busybox "$ROOT/sbin/init"
     touch "$ROOT/etc/resolv.conf"
     cp -a rootfs/. "$ROOT/"
     chmod 755 "$ROOT/init" "$ROOT/etc/rc.init" "$ROOT/etc/rc.shutdown" \
-              "$ROOT/usr/share/udhcpc/default.script"
+              "$ROOT/usr/share/udhcpc/default.script" "$ROOT/usr/bin/hammerwm"
     echo "rootfs assembled"
 }
 
