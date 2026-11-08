@@ -1,6 +1,6 @@
 # hammerOS 0.1 — "Forge"
 
-> **status: work in progress** — first build is bootable-live; GUI lands in 0.2.
+> **status: 0.2 GUI is live** — framebuffer desktop + links browser, boot-tested. X desktop is next (0.3).
 
 An ultra-light, **built-from-source** Linux distribution:
 upstream **Linux kernel** + **musl libc** + **BusyBox** userland. No Debian,
