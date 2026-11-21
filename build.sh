@@ -19,7 +19,7 @@ VER_MUSL="1.2.5"
 VER_DROP="2024.86"
 VER_LINKS="2.30"
 VER_KERN="${VER_KERN:-auto}"     # auto = detect newest 6.12 LTS patch
-ISOVER="0.3.0"
+ISOVER="0.3.1"
 JOBS="$(nproc)"
 
 fetch() {
