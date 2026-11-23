@@ -91,5 +91,10 @@ work/                 # gitignored build dir (sources, layer, objfs)
 
 ## Releases
 
+- [0.3.1](https://github.com/grantdong1-maker/hammerOS/releases/tag/0.3.1) —
+  fix dead keyboard/mouse in X: kernel now builds `CONFIG_INPUT_EVDEV`
+  (`/dev/input/event*`) so libinput can see devices.
+- [0.3.0](https://github.com/grantdong1-maker/hammerOS/releases/tag/0.3.0) —
+  Debian bookworm feature layer, X + JWM desktop.
 - [0.2.0](https://github.com/grantdong1-maker/hammerOS/releases/tag/0.2.0) —
   11 MB source-only framebuffer desktop.
