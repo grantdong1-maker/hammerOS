@@ -1,5 +1,5 @@
 NAME=hammerOS
-VERSION=0.2.0 (Forge)
+VERSION=0.2.0
 ID=hammeros
-PRETTY_NAME="hammerOS 0.2.0 (Forge)"
+PRETTY_NAME="hammerOS 0.2.0"
 HOME_URL="https://github.com/grantdong1-maker/hammerOS"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# hammerOS ("Forge") build system — builds an ultra-light Linux from
+# hammerOS build system — builds an ultra-light Linux from
 # upstream sources only: linux kernel + musl + busybox + dropbear.
 #
-#   ./build.sh [fetch|kernel|rootfs|iso|all]
+#   ./build.sh [fetch|kernel|layer|rootfs|iso|all]
 #
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -172,7 +172,7 @@ stage_iso() {
         -iso-level 3 \
         -b boot/isolinux/isolinux.bin -c boot/boot.cat \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
-        -J -R -V "hammerOS ${ISOVER} Forge" "$IT"
+        -J -R -V "hammerOS ${ISOVER}" "$IT"
     sha256sum "$ISO" "$OUT/initramfs.cpio.gz" > "$ISO.sha256"
     ls -lh "$ISO" "$ISO.sha256"
     echo "hammerOS ${ISOVER} built."
@@ -185,5 +185,5 @@ case "${1:-all}" in
     rootfs) stage_rootfs ;;
     iso)    stage_iso ;;
     all)    stage_fetch; stage_kernel; stage_layer; stage_rootfs; stage_iso ;;
-    *) echo "usage: $0 [fetch|kernel|rootfs|iso|all]"; exit 1 ;;
+    *) echo "usage: $0 [fetch|kernel|layer|rootfs|iso|all]"; exit 1 ;;
 esac

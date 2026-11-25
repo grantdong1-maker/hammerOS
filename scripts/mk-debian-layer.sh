@@ -70,7 +70,7 @@ chroot "$DIR" env DEBIAN_FRONTEND=noninteractive apt-get install -y $PKGS
 echo "== hammerOS overlay config"
 echo hammeros > "$DIR/etc/hostname"
 printf '127.0.1.1\thammeros\n' > "$DIR/etc/hosts"
-printf 'hammerOS 0.3 "Forge" — kernel+busybox from source, feature layer from Debian %s\n' "$RELEASE" \
+printf 'hammerOS 0.3.1 — kernel+busybox from source, feature layer from Debian %s\n' "$RELEASE" \
     > "$DIR/etc/issue"
 
 # slim: autologin root straight into the session

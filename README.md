@@ -1,7 +1,8 @@
-# hammerOS — "Forge"
+# hammerOS
 
-> **status: 0.3 is live** — 1.3 GB feature-packed ISO, X11 + JWM desktop,
-> boot-tested. 0.2's 11 MB framebuffer desktop is still the failsafe.
+> **status: 0.3.1 is live** — 1.3 GB feature-packed ISO, X11 + JWM desktop,
+> boot-tested; 0.3.1 fixes keyboard/mouse input in X. 0.2's 11 MB framebuffer
+> desktop is still the failsafe.
 
 An ultra-light, **built-from-source** Linux core with a fat feature layer on
 top: upstream **Linux kernel** + **musl libc** + **BusyBox** + **dropbear** +
@@ -11,8 +12,8 @@ Puppy-Woof style.
 
 ```
 anvil
-  ├── hammer    <- AnvilOS 1.0 (the big distro, Debian live-build)
-  └── forge     <- this OS (from-source core + Debian feature layer)
+  ├── hammer     <- AnvilOS 1.0 (the big distro, Debian live-build)
+  └── hammerOS   <- this OS (from-source core + Debian feature layer)
 ```
 
 ## Design targets
@@ -76,7 +77,7 @@ Artifact: `hammeros-<version>-amd64.iso` + `.sha256`.
 - 0.3 — X11 + JWM desktop with the Debian bookworm feature layer, GPU/sound/
   WiFi drivers, live squashfs + overlayfs boot ✅
 - 0.4 — savefile persistence, UEFI boot, `hammeros-install` to USB/disk
-- 0.5 — forge-pkg (musl-compatible static packages for the core, update channel)
+- 0.5 — hammer-pkg (musl-compatible static packages for the core, update channel)
 
 ## Repo layout
 

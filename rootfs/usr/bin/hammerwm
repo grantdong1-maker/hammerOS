@@ -39,7 +39,7 @@ menu() {
     [ $total -eq 0 ] && { REPLY_IDX=-1; return; }
     while :; do
         scr
-        at 1 1; bold; printf ' hammerOS 0.2 "Forge" '; norm
+        at 1 1; bold; printf ' hammerOS 0.2 '; norm
         at 2 $((W-26)); printf '%s ram · %s' "$(mem)" "$(myip)"; norm
         at 4 2; bold; printf ' %s ' "$title"; norm
         at 5 2; dim; printf '%s' "$sub"; norm
